@@ -6,6 +6,9 @@ services:
    container_name: bot_container
    restart: always
    volumes:
-    - ./:/home/node/app
+    - ./:/app/
    ports:
     - 9001:9001 
+   command: >
+    /bin/sh -c "npm install --production=false
+    && npm run dev"
