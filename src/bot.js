@@ -12,10 +12,11 @@ const client = new Client({
 });
 
 const { Console } = require("console");
-const axios = require('axios')
+const axios = require('axios');
+const apiUrl = process.env.API_URL;
 
 const fs = require('fs');
-
+const guild = require("./modules/guild");
 
 
 client.login(process.env.DISCORD_BOT_TOKEN);
@@ -24,16 +25,24 @@ client.on('ready', () => {
   console.log(`Logged in as ${client.user.tag}!`);
 });
 
-
 client.on('messageCreate', (message) => {
   if (process.env.DEBUG_MESSAGES === true) {
     logger(message);
   }
 
   if (message.content.startsWith(process.env.COMMAND_INDICATOR)) {
-    message.reply("Comando funcionando!")
+    commandInput(message);
   }
 
+
+  async function commandInput(message){
+
+    const guild = require('./modules/guild');
+    const guildValidation = await guild.validation(message.guild);
+    if(!guildValidation)
+      return;
+
+  }
 
   function logger(message) {
 
